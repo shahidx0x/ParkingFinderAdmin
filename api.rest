@@ -1,0 +1,1 @@
+delete https://firestore.googleapis.com/v1/projects/parking-finder-ff81d/databases/(default)/documents/Users/vXsEp49IVRVc44oA8vgG
