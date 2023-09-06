@@ -39,6 +39,6 @@ This project is licensed under the [MIT License](LICENSE.md).
 
 ## Contact
 
-If you have any questions or need assistance, please feel free to contact us at [dev.imshahid@email.com](mailto:dev.imshahid@email.com).
+If you have any questions or need assistance, please feel free to contact us at [dev.imshahid@gmail.com](mailto:dev.imshahid@gmail.com).
 
 Happy parking management with Parking Finder!
