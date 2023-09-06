@@ -1,6 +1,6 @@
 # Admin Panel Dashboard - Parking Finder
 
-![Dashboard Preview](dashboard-preview.png)
+![Dashboard Preview](https://i.ibb.co/Vgdprc7/image.png)
 
 Welcome to the Admin Panel Dashboard for Parking Finder! This powerful tool allows you to manage various aspects of parking solution, including user management, garages management, parking management, and payment management.
 
