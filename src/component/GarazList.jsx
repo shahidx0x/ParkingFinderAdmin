@@ -4,8 +4,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
+import "react-modern-drawer/dist/index.css";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { deleteUsers } from "../api/deleteUser";
 import { getFcm } from "../api/getFcm";
 import { getGarages } from "../api/getGatages";
@@ -31,32 +33,6 @@ export function GarazList() {
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-800">
               Garages List
             </p>
-            <div>
-              <button
-                onClick={() => window.my_modal_1.showModal()}
-                className=" hidden  sm:ml-3 mt-4 sm:mt-0 items-start justify-start px-6 py-3 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded"
-              >
-                <p className="text-sm font-medium leading-none text-white">
-                  Add User
-                </p>
-              </button>
-
-              <dialog id="my_modal_1" className="modal">
-                <form method="dialog" className="modal-box">
-                  <div className="font-bold text-lg p-3 w-full text-black bg-gray-400">
-                    Add User
-                  </div>
-                  <p className="py-4">
-                    Press ESC key or click the button below to close
-                  </p>
-
-                  <div className="modal-action">
-                    {/* if there is a button in form, it will close the modal */}
-                    <button className="btn">Close</button>
-                  </div>
-                </form>
-              </dialog>
-            </div>
           </div>
         </div>
         <div className="bg-white shadow px-4 md:px-10 pt-4 md:pt-7 pb-5 overflow-y-auto">
@@ -93,9 +69,9 @@ export function GarazList() {
 
 function TableRow({ props, user }) {
   const queryClient = useQueryClient();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = React.useState(false);
   const toggleDrawer = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prevState) => !prevState);
   };
   const {
     name: g_name,
@@ -112,6 +88,7 @@ function TableRow({ props, user }) {
     coverImage,
     division,
   } = props.fields;
+
   const { name } = props;
   const uid = name.split("/");
   const [show, setShow] = useState(null);
@@ -198,13 +175,19 @@ function TableRow({ props, user }) {
     };
     del_mutation.mutateAsync(id, config);
   };
+  const navigate = useNavigate();
+  function RedirectToSpot() {
+    navigate(`/dashbord/spot-information/${g_name.stringValue}`, {
+      state: { floorDetails },
+    });
+  }
   return (
     <>
       <tr
-        onClick={() => window.my_modal_1.showModal()}
+       
         className="h-20 text-sm leading-none text-gray-800 bg-white hover:bg-gray-100 border-b border-t border-gray-100"
       >
-        <td className="pl-4 cursor-pointer">
+        <td  onClick={RedirectToSpot} className="pl-4 cursor-pointer">
           <div className="flex items-center">
             <div className="w-10 h-10">
               <img
@@ -253,107 +236,11 @@ function TableRow({ props, user }) {
           {totalSpace?.stringValue - availableSpace?.stringValue}
         </td>
         <td className="pl-20">{rating?.stringValue}</td>
-        <td className="px-7 2xl:px-0 hidden">
-          {show == 0 ? (
-            <button
-              onClick={() => setShow(null)}
-              className="focus:outline-none pl-7"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={20}
-                height={20}
-                viewBox="0 0 20 20"
-                fill="none"
-              >
-                <path
-                  d="M4.16667 10.8334C4.62691 10.8334 5 10.4603 5 10.0001C5 9.53984 4.62691 9.16675 4.16667 9.16675C3.70643 9.16675 3.33334 9.53984 3.33334 10.0001C3.33334 10.4603 3.70643 10.8334 4.16667 10.8334Z"
-                  stroke="#A1A1AA"
-                  strokeWidth="1.25"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M10 10.8334C10.4602 10.8334 10.8333 10.4603 10.8333 10.0001C10.8333 9.53984 10.4602 9.16675 10 9.16675C9.53976 9.16675 9.16666 9.53984 9.16666 10.0001C9.16666 10.4603 9.53976 10.8334 10 10.8334Z"
-                  stroke="#A1A1AA"
-                  strokeWidth="1.25"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M15.8333 10.8334C16.2936 10.8334 16.6667 10.4603 16.6667 10.0001C16.6667 9.53984 16.2936 9.16675 15.8333 9.16675C15.3731 9.16675 15 9.53984 15 10.0001C15 10.4603 15.3731 10.8334 15.8333 10.8334Z"
-                  stroke="#A1A1AA"
-                  strokeWidth="1.25"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-          ) : (
-            <button
-              onClick={() => setShow(0)}
-              className="focus:outline-none pl-7"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={20}
-                height={20}
-                viewBox="0 0 20 20"
-                fill="none"
-              >
-                <path
-                  d="M4.16667 10.8334C4.62691 10.8334 5 10.4603 5 10.0001C5 9.53984 4.62691 9.16675 4.16667 9.16675C3.70643 9.16675 3.33334 9.53984 3.33334 10.0001C3.33334 10.4603 3.70643 10.8334 4.16667 10.8334Z"
-                  stroke="#A1A1AA"
-                  strokeWidth="1.25"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M10 10.8334C10.4602 10.8334 10.8333 10.4603 10.8333 10.0001C10.8333 9.53984 10.4602 9.16675 10 9.16675C9.53976 9.16675 9.16666 9.53984 9.16666 10.0001C9.16666 10.4603 9.53976 10.8334 10 10.8334Z"
-                  stroke="#A1A1AA"
-                  strokeWidth="1.25"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M15.8333 10.8334C16.2936 10.8334 16.6667 10.4603 16.6667 10.0001C16.6667 9.53984 16.2936 9.16675 15.8333 9.16675C15.3731 9.16675 15 9.53984 15 10.0001C15 10.4603 15.3731 10.8334 15.8333 10.8334Z"
-                  stroke="#A1A1AA"
-                  strokeWidth="1.25"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-          )}
-          {show == 0 && (
-            <div className="dropdown-content bg-white shadow w-24 absolute z-30 right-0 mr-6 ">
-              <div className="text-xs w-full hover:bg-indigo-700 py-4 px-4 cursor-pointer hover:text-white">
-                <p>Edit</p>
-              </div>
-              <div
-                onClick={() => handleDelete(uid[6])}
-                className="text-xs w-full hover:bg-indigo-700 py-4 px-4 cursor-pointer hover:text-white"
-              >
-                <p>Delete</p>
-              </div>
-            </div>
-          )}
-        </td>
-        <dialog id="my_modal_1" className="modal">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg">Hello!</h3>
-            <p className="py-4">
-              Press ESC key or click the button below to <close></close>
-            </p>
-            <div className="modal-action">
-              <form method="dialog">
-                {/* if there is a button in form, it will close the modal */}
-                <button className="btn">Close</button>
-              </form>
-            </div>
-          </div>
-        </dialog>
       </tr>
     </>
   );
+}
+
+function parkingList() {
+  return <></>;
 }

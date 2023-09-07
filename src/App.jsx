@@ -8,9 +8,12 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import "./App.css";
+import { Chat } from "./component/Chat";
 import { GarazList } from "./component/GarazList";
 import { Login } from "./component/Login";
+import MessagePanel from "./component/MessagePanel";
 import { SideNavbar } from "./component/SideNavBar";
+import { SpotInfo } from "./component/SpotInfo";
 import { UserList } from "./component/UserList";
 import { auth } from "./firebase/firebase.config";
 import { isLoading, loginUser } from "./redux/slices/userSlice";
@@ -52,6 +55,28 @@ function App() {
       path: "/dashbord",
       element: <Dashbord />,
       children: [
+        {
+          path: "spot-information/:gname",
+          element: (
+            <Admin>
+              <SpotInfo />
+            </Admin>
+          ),
+        },
+        {
+          path: "message",
+          element: (
+            <Admin>
+              <MessagePanel />
+            </Admin>
+          ),
+          children: [
+            {
+              path: "person/:param",
+              element: <Chat />,
+            },
+          ],
+        },
         {
           path: "users",
           element: (

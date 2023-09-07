@@ -10,7 +10,7 @@ import { logOut } from "../redux/slices/userSlice";
 
 export const Login = () => {
   const user = useSelector((state) => state.user.user);
-  const { data, status } = useQuery("admins", getAdmins);
+  const { data } = useQuery("admins", getAdmins);
   const dispatch = useDispatch();
   const isAdmin = data?.some(
     (data) => data?.fields?.email?.stringValue === user?.email

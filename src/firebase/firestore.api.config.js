@@ -7,4 +7,5 @@ export const fireStoreCollectionsEndPoint = {
   users: `${base}/Users`,
   garages: `${base}/Garages`,
   parkingPoint: `${base}/ParkingPoint`,
+  messageAdmin: `${base}/admins/RkbxVLm8spWcEbMOyxp8H69eQRs2/Messages`,
 };
